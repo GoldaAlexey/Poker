@@ -6,7 +6,7 @@ class TablesListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Table
-        fields = ["TableId", "TableName"]
+        fields = ["TableId", "TableName", "PlayerIn"]
 
 class TableSerializer(serializers.ModelSerializer):
     TableName = serializers.CharField(max_length=500)

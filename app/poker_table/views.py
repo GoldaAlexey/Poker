@@ -25,4 +25,21 @@ class TableView(APIView):
         table = Tables.objects.get(TableId=pk)
         serializer = TableSerializer(table)
         return Response(serializer.data)
+    def put(self, request, pk):
+        try:
+            table = Tables.objects.get(pk=pk)
+        except Tables.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        serializer = TableSerializer(table, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self, request, pk):
+        try:
+            table = Tables.objects.get(pk=pk)
+        except Tables.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        table.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
     
